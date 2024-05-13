@@ -39,6 +39,7 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_below="@+id/user"
         android:hint="Masukkan Username Anda"
         android:drawableStart="@drawable/account_avatar_face_man_people_profile_user_icon_123197"
@@ -61,8 +62,11 @@
     android:textColor="@color/black"
     />
 
+
+
     <EditText
         android:id="@+id/password"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pass"
@@ -74,6 +78,7 @@
         android:paddingLeft="20dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
+        android:inputType="textPassword"
         />
 
     <Button

@@ -3,11 +3,14 @@ package com.example.pakettttt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +25,14 @@ import java.util.Random;
 
 public class MainPaket extends AppCompatActivity {
 
-    private Spinner spinnertanggal,spinnerbulan,spinnertahun,spinnerpengirimang;
-    private ChipGroup chipGroup;
+    protected Spinner spinnertanggal,spinnerbulan,spinnertahun,spinnerpengirimang;
+    protected ChipGroup chipGroup;
+    protected Button kirimkan;
+    protected EditText isimasuk,namamasuk;
 
-    private TextView text;
+    protected TextView text;
 
-    private List<Chip> chipList = new ArrayList<>();
+    protected List<Chip> chipList = new ArrayList<>();
 
 
 
@@ -40,17 +45,20 @@ public class MainPaket extends AppCompatActivity {
         spinnerbulan = findViewById(R.id.spinnerbulan);
         spinnertahun = findViewById(R.id.spinnertahun);
         spinnerpengirimang = findViewById(R.id.spinnerPengiriman);
+        isimasuk = findViewById(R.id.masukisi);
+        namamasuk = findViewById(R.id.masuknama);
+        kirimkan = findViewById(R.id.btnkirim);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.
-                createFromResource(getApplicationContext(),
+        ArrayAdapter<CharSequence> adaptertanggal = ArrayAdapter.
+                createFromResource(this,
                         R.array.tanggals,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnertanggal.setAdapter(adapter);
+        adaptertanggal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnertanggal.setAdapter(adaptertanggal);
         spinnertanggal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),
-                        adapter.getItem(position),Toast.LENGTH_SHORT).show();
+                        adaptertanggal.getItem(position),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -62,7 +70,7 @@ public class MainPaket extends AppCompatActivity {
         });
 
         ArrayAdapter<CharSequence> adapterbulan = ArrayAdapter.
-                createFromResource(getApplicationContext(),
+                createFromResource(this,
                         R.array.bulans,android.R.layout.simple_spinner_item);
         adapterbulan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerbulan.setAdapter(adapterbulan);
@@ -70,7 +78,7 @@ public class MainPaket extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),
-                        adapter.getItem(position),Toast.LENGTH_SHORT).show();
+                        adapterbulan.getItem(position),Toast.LENGTH_SHORT).show();
 
             }
 
@@ -81,7 +89,7 @@ public class MainPaket extends AppCompatActivity {
         });
 
         ArrayAdapter<CharSequence> adaptertahun = ArrayAdapter.
-                createFromResource(getApplicationContext(),
+                createFromResource(this,
                         R.array.tahuns,android.R.layout.simple_spinner_item);
         adaptertahun.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnertahun.setAdapter(adaptertahun);
@@ -89,7 +97,7 @@ public class MainPaket extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),
-                        adapter.getItem(position),Toast.LENGTH_SHORT).show();
+                        adaptertahun.getItem(position),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -101,7 +109,7 @@ public class MainPaket extends AppCompatActivity {
 
 
         ArrayAdapter<CharSequence> spinnerpengirim = ArrayAdapter.createFromResource
-                (getApplicationContext(),
+                (this,
                 R.array.pengirimans,android.R.layout.simple_spinner_item);
         spinnerpengirim.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerpengirimang.setAdapter(spinnerpengirim);
@@ -109,12 +117,41 @@ public class MainPaket extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),
-                        adapter.getItem(position),Toast.LENGTH_SHORT).show();
+                        spinnerpengirim.getItem(position),Toast.LENGTH_SHORT).show();
             }
 
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        kirimkan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainPaket.this, History.class);
+
+
+                String namapenerima = namamasuk.getText().toString();
+                String isipesan = isimasuk.getText().toString();
+                String tanggal = spinnertanggal.getSelectedItem().toString();
+                String bulan = spinnerbulan.getSelectedItem().toString();
+                String tahun = spinnertahun.getSelectedItem().toString();
+                String pengirim = spinnerpengirimang.getSelectedItem().toString();
+
+
+
+                intent.putExtra("namapenerima", namapenerima);
+                intent.putExtra("isipesan", isipesan);
+                intent.putExtra("tanggal", tanggal);
+                intent.putExtra("bulan", bulan);
+                intent.putExtra("tahun", tahun);
+                intent.putExtra("pengirim", pengirim);
+                startActivity(intent);
+
+
 
             }
         });
